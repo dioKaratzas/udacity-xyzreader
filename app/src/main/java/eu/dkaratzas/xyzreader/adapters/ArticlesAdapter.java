@@ -28,7 +28,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.transition.Transition;
 
@@ -39,6 +39,7 @@ import eu.dkaratzas.xyzreader.data.models.Article;
 import eu.dkaratzas.xyzreader.holders.ArticlesViewHolder;
 import eu.dkaratzas.xyzreader.ui.activities.ArticleDetailActivity;
 import eu.dkaratzas.xyzreader.ui.activities.ArticleListActivity;
+import eu.dkaratzas.xyzreader.utils.GlideApp;
 
 public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesViewHolder> {
     private static final String TAG = ArticlesAdapter.class.toString();
@@ -84,9 +85,10 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesViewHolder> {
         holder.dateView.setText(article.getFormattedDate());
         holder.authorView.setText(article.getAuthor());
 
-        Glide.with(mParent.getApplicationContext())
+        GlideApp.with(mParent.getApplicationContext())
                 .asBitmap()
                 .load(article.getThumb())
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(new BitmapImageViewTarget(holder.thumbnailView) {
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {

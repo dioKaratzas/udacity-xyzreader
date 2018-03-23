@@ -44,7 +44,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.transition.Transition;
 
@@ -57,6 +57,7 @@ import eu.dkaratzas.xyzreader.R;
 import eu.dkaratzas.xyzreader.adapters.ArticleBodyAdapter;
 import eu.dkaratzas.xyzreader.data.models.Article;
 import eu.dkaratzas.xyzreader.loaders.ArticleLoader;
+import eu.dkaratzas.xyzreader.utils.GlideApp;
 import eu.dkaratzas.xyzreader.utils.Misc;
 
 
@@ -149,9 +150,11 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
     }
 
     private void setUpUi() {
-        Glide.with(getActivity().getApplicationContext())
+        GlideApp
+                .with(getActivity().getApplicationContext())
                 .asBitmap()
                 .load(mArticle.getPhoto())
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(new BitmapImageViewTarget(mIvPhoto) {
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
